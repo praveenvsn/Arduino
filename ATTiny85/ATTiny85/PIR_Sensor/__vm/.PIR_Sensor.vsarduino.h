@@ -85,4 +85,5 @@ extern "C" void __cxa_pure_virtual() {;}
 #define portInputRegister(P)
 #define portModeRegister(P)
 #include <..\PIR_Sensor\PIR_Sensor.ino>
+#include <..\PIR_Sensor\PIRSwitch_PinChangeIntApproach.ino>
 #endif
