@@ -25,15 +25,21 @@
 #include <TinyRTClib.h>
 
 #define DS1307_ADDR   0x68              // I2C real time clock
-#define LED1_PIN         4              // ATtiny Pin 3
+#define SWITCH_PIN       4              // ATtiny Pin 3
+#define OPEN_PIN_1		 3				// ATTiny Pin 2
+#define OPEN_PIN_2		 1				// ATTiny Pin 6
 
 RTC_DS1307 rtc;                      // Set up real time clock object
 uint8_t hourvalue;
 
 
 void setup() {
-	pinMode(LED1_PIN, OUTPUT);
-	TinyWireM.begin();                    // initialize I2C lib
+	pinMode(OPEN_PIN_1, OUTPUT);		// Unused Pin is made as OUTPUT  
+	pinMode(OPEN_PIN_2, OUTPUT);		// Unused Pin is made as OUTPUT  
+	pinMode(SWITCH_PIN, OUTPUT);
+	digitalWrite(OPEN_PIN_1, LOW);
+	digitalWrite(OPEN_PIN_2, LOW);
+	TinyWireM.begin();             // initialize I2C lib
 	rtc.begin();                  // Begin DS1307 real time clock
 	if (!rtc.isrunning()) {      // Uncomment lines below first use of clock to set time
 								 //Serial.println("RTC is NOT running!");
@@ -59,14 +65,14 @@ void CheckTime()
 	hourvalue = now.hour();             // Get the hour
 
 	if (hourvalue >= 19 && hourvalue <= 21)
-		digitalWrite(LED1_PIN, HIGH);
+		digitalWrite(SWITCH_PIN, HIGH);
 	else
-		digitalWrite(LED1_PIN, LOW);
+		digitalWrite(SWITCH_PIN, LOW);
 }
 
 //#ifdef DEBUG
 void Blink(byte led, byte times) { // poor man's GUI
-	for (byte i = 0; i< times; i++) {
+	for (byte i = 0; i < times; i++) {
 		digitalWrite(led, HIGH);
 		delay(400);
 		digitalWrite(led, LOW);
